@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3307
--- Generation Time: Nov 24, 2024 at 01:39 AM
+-- Host: localhost:3306
+-- Generation Time: Dec 04, 2024 at 02:34 AM
 -- Server version: 8.0.30
--- PHP Version: 7.4.33
+-- PHP Version: 8.1.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -48,7 +48,38 @@ INSERT INTO `carts` (`id`, `user_id`, `product_id`, `quantity`, `unit_price`, `t
 (1, 5, 41, 2, 2560, 5120, 0, NULL, '2024-11-16 15:58:24', '2024-11-16 15:58:24'),
 (2, 7, 40, 1, 2220, 2220, 0, NULL, '2024-11-23 13:59:59', '2024-11-23 13:59:59'),
 (3, 5, 45, 1, 3050, 3050, 0, NULL, '2024-11-23 14:19:51', '2024-11-23 14:19:51'),
-(4, 5, 46, 1, 14670, 14670, 0, NULL, '2024-11-23 15:47:13', '2024-11-23 15:47:13');
+(4, 5, 46, 1, 14670, 14670, 0, NULL, '2024-11-23 15:47:13', '2024-11-23 15:47:13'),
+(5, 9, 41, 1, 2560, 2560, 1, NULL, '2024-12-03 15:36:19', '2024-12-03 15:36:19'),
+(6, 9, 41, 1, 2560, 2560, 1, NULL, '2024-12-03 15:36:23', '2024-12-03 15:36:23'),
+(7, 9, 41, 1, 2560, 2560, 1, NULL, '2024-12-03 15:36:25', '2024-12-03 15:36:25'),
+(8, 9, 41, 1, 2560, 2560, 1, NULL, '2024-12-03 15:36:28', '2024-12-03 15:36:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int NOT NULL,
+  `order_date` datetime NOT NULL,
+  `payment_method` smallint NOT NULL,
+  `account_no` varchar(25) NOT NULL,
+  `user_id` int NOT NULL,
+  `total_order` float NOT NULL,
+  `delivery_fee` float NOT NULL,
+  `total_amount` float NOT NULL,
+  `remarks` varchar(500) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `order_date`, `payment_method`, `account_no`, `user_id`, `total_order`, `delivery_fee`, `total_amount`, `remarks`, `created_at`, `updated_at`) VALUES
+(2, '2024-12-03 18:01:13', 1, '2312-2312-32131', 9, 10240, 50, 10290, NULL, '2024-12-03 18:01:13', '2024-12-03 18:01:13');
 
 -- --------------------------------------------------------
 
@@ -77,7 +108,7 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `product_name`, `product_description`, `category_id`, `base_price`, `stocks`, `unit_price`, `total_price`, `image_url`, `created_at`, `updated_at`) VALUES
 (39, 'Trendsonic Frontier Igloo', 'Igloo IG30A White Dual Chamber Gaming ATX Case w/4x120mm Fan', 1, 2100, 5, 2490, 12450, 'public/uploads/products/92aff04a55121a69af1807f001f826df.webp', '2024-11-15 21:50:23', '2024-11-15 21:50:23'),
 (40, 'FSP CMT212A TG', 'ATX Black Mid Tower Case w/ 4x120mm Fan', 1, 2060, 0, 2220, 11100, 'public/uploads/products/b50ef7ae584647f70648838b35a93740.webp', '2024-11-15 21:54:44', '2024-11-15 21:54:44'),
-(41, 'Tecware Infinity M', ' Infinity M ARGB Dual Tempered Glass mATX Case w/ 3x120mm ARGB Fans', 1, 2200, 10, 2560, 25600, 'public/uploads/products/2ff7ea150532ebfe4fdba6d75a87b8a3.webp', '2024-11-15 21:55:38', '2024-11-15 21:55:38'),
+(41, 'Tecware Infinity M', ' Infinity M ARGB Dual Tempered Glass mATX Case w/ 3x120mm ARGB Fans', 1, 2200, 6, 2560, 25600, 'public/uploads/products/2ff7ea150532ebfe4fdba6d75a87b8a3.webp', '2024-11-15 21:55:38', '2024-11-15 21:55:38'),
 (42, 'Cooler Master Masterbox', 'Masterbox NR200P White ITX Case MCB-NR200P-WGNN-S00', 1, 4000, 7, 4380, 30660, 'public/uploads/products/8a8af15ee66d22e31070da87f9e41364.webp', '2024-11-15 22:00:30', '2024-11-15 22:00:30'),
 (43, 'Phanteks Eclipse', 'P360A AIR TG DRGB Black PH-EC360ATG_DBK01', 1, 3900, 4, 4200, 16800, 'public/uploads/products/21959068e5626d19da1832191529e811.webp', '2024-11-15 22:02:23', '2024-11-15 22:02:23'),
 (44, 'Thermaltake V250 TG', 'ARGB BLACK Mid Tower ATX Case CA-1Q5-00M1WN-00 (w/ 3 x 120mm ARGB BLK + 1 x 120mm BLK Fan)\r\n', 1, 2900, 10, 3310, 33100, 'public/uploads/products/2bccb262ba9bee83f8b7688061ad85fa.webp', '2024-11-15 22:03:59', '2024-11-15 22:03:59'),
@@ -139,7 +170,8 @@ INSERT INTO `users` (`id`, `fullname`, `username`, `password`, `is_admin`, `rema
 (3, 'dummy', 'dummydoe', '1234', 0, NULL, '2024-10-19 14:20:06', '2024-10-19 14:20:06'),
 (5, 'dummy joe', 'djoe2003', '$2y$10$lZqzLrF2HXFYja/HqpOcEeJGMfy1YH3CdUZ7b4bu.d13y8UrskCZC', 0, NULL, '2024-10-19 15:08:53', '2024-10-19 15:08:53'),
 (7, 'admin', 'admin', '$2y$10$YPG71Y2G6ZXDd2uJvkRMi.ncKiYe/ISRB8/XsPQb0pV/IAfZjGdfi', 1, NULL, '2024-10-26 02:19:23', '2024-10-26 02:19:23'),
-(8, 'reguser1', 'reguser1', '$2y$10$4czVTFLR3e/69RP2wNM4ru/7hRorINqCHOUPsvCS3N8wWvt6H/qMm', 0, NULL, '2024-11-23 14:44:11', '2024-11-23 14:44:11');
+(8, 'reguser1', 'reguser1', '$2y$10$4czVTFLR3e/69RP2wNM4ru/7hRorINqCHOUPsvCS3N8wWvt6H/qMm', 0, NULL, '2024-11-23 14:44:11', '2024-11-23 14:44:11'),
+(9, 'Miguel Andrei del Rosario', 'miguelandrei@sdca.edu.ph', '$2y$10$aQPV9chJkYiEdpPAnQzxlO.smrmBlOIjxDbES02faZ7pV8ktbYBXa', 0, NULL, '2024-12-03 15:35:55', '2024-12-03 15:35:55');
 
 --
 -- Indexes for dumped tables
@@ -149,6 +181,12 @@ INSERT INTO `users` (`id`, `fullname`, `username`, `password`, `is_admin`, `rema
 -- Indexes for table `carts`
 --
 ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -172,7 +210,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -184,7 +228,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
